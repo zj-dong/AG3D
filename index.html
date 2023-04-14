@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="description"
-        content="Animating non-rigid neural implicit shapes.">
-  <meta name="keywords" content="SNARF">
+        content="Learning to generate 3D avatars from 2D image collections.">
+  <meta name="keywords" content="AG3D">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SNARF: Differentiable Forward Skinning for Animating Non-Rigid Neural Implicit Shapes</title>
+  <title>AG3D: Learning to Generate 3D Avatars from 2D Image Collections</title>
 
 
   </script>
@@ -22,11 +22,29 @@
         href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
 
+  <link rel="stylesheet" href="node_modules/dics/src/dics.css">
+  <script src="node_modules/dics/src/dics.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', domReady);
+    function domReady() {
+      for (const e of document.querySelectorAll(".b-dics")) {
+          new Dics({
+              container: e,  
+              textPosition: 'left',  
+              arrayBackgroundColorText: ['#FFFFFF', '#FFFFFF'],
+                arrayColorText: ['#000000', '#000000'],
+                linesColor: 'rgb(0,0,0)'
+          });
+      }
+    }
+  </script>
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
   <script src="./static/js/bulma-carousel.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
+
 </head>
 <body>
 
@@ -35,12 +53,15 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">SNARF: Differentiable Forward Skinning for Animating Non-Rigid Neural Implicit Shapes</h1>
+          <h1 class="title is-1 publication-title">AG3D: Learning to Generate 3D Avatars from 2D Image Collections</h1>
           <div class="is-size-5 publication-authors">
             <span class="author-block">
-              <a href="https://ait.ethz.ch/people/xu/">Xu Chen</a><sup>1,3</sup>,</span>
+              <a href="https://ait.ethz.ch/people/zijian/">Zijian Dong*</a><sup>1,2</sup>,</span>
             <span class="author-block">
-              <a href="https://ait.ethz.ch/people/zhengyuf/">Yufeng Zheng</a><sup>1,3</sup>,</span>
+              <a href="https://ait.ethz.ch/people/xu/">Xu Chen*</a><sup>1,3</sup>,</span>
+            <span class="author-block">
+              <a href="https://is.mpg.de/~jyang">Jinlong Yang</a><sup>3</sup>,
+            </span>
             <span class="author-block">
               <a href="https://ps.is.mpg.de/~black">Michael J. Black</a><sup>3</sup>,
             </span>
@@ -48,7 +69,7 @@
               <a href="https://ait.ethz.ch/people/hilliges/">Otmar Hilliges</a><sup>1</sup>,
             </span>
             <span class="author-block">
-              <a href="http://www.cvlibs.net/">Andreas Geiger</a><sup>2,3</sup>
+              <a href="http://www.cvlibs.net/">Andreas Geiger</a><sup>2</sup>
             </span>
           </div>
 
@@ -82,7 +103,7 @@
                   <span>Video</span>
                 </a>
               </span>
-              <!-- Medium Link. -->
+              <!-- Medium Link.
               <span class="link-block">
                 <a href="https://eth-ait.medium.com/animate-implicit-shapes-with-forward-skinning-c7ebbf355694"
                     class="external-link button is-normal is-rounded is-dark">
@@ -91,9 +112,9 @@
                   </span>
                   <span>Medium</span>
                 </a>
-              </span>
+              </span> -->
               <!-- Blog Link. -->
-              <span class="link-block">
+              <!-- <span class="link-block">
                 <a href="https://autonomousvision.github.io/snarf/"
                     class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
@@ -101,10 +122,10 @@
                   </span>
                   <span>Blog</span>
                 </a>
-              </span>
+              </span> -->
               <!-- Code Link. -->
               <span class="link-block">
-                <a href="https://github.com/xuchen-ethz/snarf"
+                <a href="https://github.com/zj-dong/AG3D"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fab fa-github"></i>
@@ -124,19 +145,19 @@
 <section class="hero teaser">
   <div class="container is-max-desktop">
     <div class="hero-body">
-      <video id="teaser" autoplay muted loop height="100%">
-        <source src="https://ait.ethz.ch/projects/2021/snarf/downloads/teaser.mp4"
-                type="video/mp4">
-      </video>
+        <img src="assets/teaser.png"  class="center"/>
       <h2 class="subtitle has-text-centered">
-        SNARF learns implicit shape and animation from deformed observations.
+      
+Learned from 2D image collections, AG3D synthesizes novel 3D humans with high-quality appearance and geometry, different identities and clothing
+styles including loose clothing such as skirts. 
+      
       </h2>
     </div>
   </div>
 </section>
 
 
-<section class="hero is-light is-small">
+<!-- <section class="hero is-light is-small">
   <div class="hero-body">
     <div class="container">
       <div id="results-carousel" class="carousel results-carousel">
@@ -179,7 +200,7 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
 
 
 <section class="section">
@@ -190,13 +211,18 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            Neural implicit surface representations have emerged as a promising paradigm to capture 3D shapes in a continuous and resolution-independent manner. However, adapting them to articulated shapes is non-trivial. Existing approaches learn a backward warp field that maps deformed to canonical points. However, this is problematic since the backward warp field is pose dependent and thus requires large amounts of data to learn. 
+            While progress in 2D generative models of human appearance has been rapid, many applications require 3D avatars that can be animated and rendered. Unfortunately, most existing methods for learning generative models of 3D humans with diverse shape and appearance require 3D training data, which is limited and expensive to acquire. 
+The key to progress is hence to learn generative models of 3D avatars from abundant unstructured 2D image collections. 
+However, learning realistic and complete 3D appearance and geometry in this under-constrained setting remains challenging, especially in the presence of loose clothing such as dresses.
           </p>
           <p>
-          To address this, we introduce SNARF, which combines the advantages of linear blend skinning (LBS) for polygonal meshes with those of neural implicit surfaces by learning a forward deformation field without direct supervision. This deformation field is defined in canonical, pose-independent, space, enabling generalization to unseen poses. Learning the deformation field from posed meshes alone is challenging since the correspondences of deformed points are defined implicitly and may not be unique under changes of topology. We propose a forward skinning model that finds all canonical correspondences of any deformed point using iterative root finding. We derive analytical gradients via implicit differentiation, enabling end-to-end training from 3D meshes with bone transformations. 
+            In this paper, we propose a new adversarial generative model of realistic 3D people from 2D images. 
+            Our method captures shape and deformation of the body and loose clothing by adopting a holistic 3D generator and integrating an efficient and flexible articulation module. 
+            To improve realism, we train our model using multiple discriminators while also integrating geometric cues in the form of predicted 2D normal maps. 
           </p>
           <p>
-          Compared to state-of-the-art neural implicit representations, our approach generalizes better to unseen poses while preserving accuracy. We demonstrate our method in challenging scenarios on (clothed) 3D humans in diverse and unseen poses.
+            We experimentally find that our method outperforms previous 3D- and articulation-aware methods in terms of geometry and appearance. 
+            We validate the effectiveness of our model and the importance of each component via systematic ablation studies.
           </p>
         </div>
       </div>
@@ -209,7 +235,6 @@
         <h2 class="title is-3">Video</h2>
         <div class="publication-video">
           <iframe width="560" height="315" src="https://www.youtube.com/embed/Q99t36qGZUU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
         </div>
       </div>
     </div>
@@ -217,103 +242,816 @@
   </div>
 </section>
 
-<section class="section">
-  <div class="container is-max-desktop">
-
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title">Backward vs. Forward</h2>
-
-        <!-- Demo Text-->
-        <!-- Backward. -->
-        <div class="columns is-centered">
-          <div class="column">
-            <div class="content">
-              <p>
-                <font size="+2">Backward</font> warping/skinning has been used to model non-rigid implicit shapes. It maps poitns from deformed space to canonical space. The backward skinning weights field is defined in deformed space, therefore it's pose-dependent and does not generalize to unseen poses.
-              </p>
-            </div>
-          </div>
-          <!--/ Backward. -->
-    
-          <!-- Forward. -->
-          <div class="column">
-            <div class="columns is-centered">
-              <div class="column content">
-                <p>
-                  We propose to use <font size="+2">Forward</font> skinning for animating implicit shapes. It maps points from canonical space to deformed space. The forward skinning weights field is defined in the canonical space. Thus, forward skinning naturally generalizes to unseen poses. 
-                </p>
-              </div>
-    
-            </div>
-          </div>
-        </div>
-        <!-- Forward. -->
-
-        <!-- Demo Vis-->
-        <!-- Backward. -->
-        <div class="columns is-centered">
-          <div class="column">
-            <div class="content">
-              <img src="assets/demo_backward.gif"  height="250" class="center"/>
-              <img src="assets/result_backward.gif"  height="250" class="center"/>
-            </div>
-          </div>
-          <!--/ Backward. -->
-    
-          <!-- Forward. -->
-          <div class="column">
-            <div class="columns is-centered">
-              <div class="column content">
-                <img src="assets/demo_forward.gif"  height="250" class="center"/>
-                <img src="assets/result_forward.gif"  height="250" class="center"/>
-              </div>
-    
-            </div>
-          </div>
-        </div>
-        <!-- Forward. -->
-
-      </div>
-    </div>
-</section>
-
 
 <section class="section" id="method">
   <div class="container is-max-desktop content">
     <h2 class="title">Method Overview</h2>
-    <img src="assets/pipeline.png"  height="250" class="center"/>
+    <img src="assets/method_pipeline.png"  height="250" class="center"/>
     <p>
-      To genreate deformed shape or to train with deformed observations, we need to determine the canonical correspondence of any given deformed point. This is trivial for backward skinning, but not straightforward for forward skinning. The core of our method is to find the canonical correspondence of any deformed point using forward skinning weights. We use iterative root finding algorithm with multiple initializations to numerically find all corrpondences, and then aggregate their occupancy probabilities using max operator as the occupancy of the deformed point. Finnally, we derive analytical gradients using the implicit differentiation theorem, so that the whole pipeline is end-to-end differentiable and thus can be trained with deformed observations directly.
+    Instead of representing humans with separate body parts, we adopt a monolithic approach that is able to model the human body as well as loose clothing, while adding multiple
+    discriminators that increase the fidelity of perceptually important regions and improve geometric details.
     </p>
+
+    <h3 class="title">Holistic Human Generation and Deformation</h3>
+      <p>
+        We model the appearance and geometry of 3D humans holistically in a canonical space using a monolithic 3D generator and an efficient tri-plane representation. To enable fast volume rendering, we
+        adapt the efficient articulation module, Fast-SNARF, to our generative setting and further accelerate rendering via empty-space skipping, informed by a coarse human body
+        prior. Finally, the rendered images are lift to high-resolution images.  
+      </p>
+
+      <h3 class="title">Modular 2D Discriminators</h3>
+      <p>
+        We propose multiple discriminators to improve geometric detail as well as the
+        perceptually-important face region as we found that a single
+        adversarial loss on rendered images is insufficient to recover
+        meaningful 3D geometry in such a highly under-constrained
+        setting.  In addition
+        to an image discriminator operating on the images, we improve geometry by introducing a normal discriminator that compares
+        our rendered normal maps with the normals of real images predicted by an off-the-shelf normal estimator. To further improve
+        the quality of the perceptually important face region, we add normal and image discriminators for the face region.
+      </p>
   </div>
 </section>
+
+
+
 
 <section class="section" id="result">
   <div class="container is-max-desktop content">
-    <h2 class="title">Comparison</h2>
+    <h2 class="title">Result</h2>
+    
+    <h3 class="title">Rotation</h3>
 
-    <p>
-      We train our method using meshes in various poses and ask the model to generate novel poses during inference time:
-    </p>
-    <video poster="" id="chair-tp" autoplay controls muted loop height="100%">
-      <source src="assets/result.mp4", type="video/mp4">
-    </video>
-    <p>
-      As shown, our method generalizes to these challenging and unseen poses. In comparison, backward skinning produces distorted shapes for unseen poses. The other baseline, NASA, models human body as a composition of multiple parts and suffers from discontinuous artifacts at joints.
-    </p>
+    <div class="container is-max-desktop content">
+      <h4 class="title">Generated samples on DeepFashion</h4>
+    
+      <section class="hero is-light is-small">
+    
+    
+      <div class="hero-body">
+        <div class="container">
+          <div id="results-carousel" class="carousel results-carousel">
+            <!-- <div class="item item-steve">
+              <video poster="" autoplay controls muted loop height="100%">
+                <source src="https://ait.ethz.ch/projects/2022/gdna/downloads/assets/sample1_crop.mp4" type="video/mp4">
+              </video>
+            </div> -->
+
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/deepfashion/02_color.gif" alt="Appearance">
+                    <img src="assets/deepfashion/02_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+  
+            
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/deepfashion/05_color.gif" alt="Appearance">
+                    <img src="assets/deepfashion/05_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+  
+
+            
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/deepfashion/11_color.gif" alt="Appearance">
+                    <img src="assets/deepfashion/11_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+  
+
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/deepfashion/04_color.gif" alt="Appearance">
+                    <img src="assets/deepfashion/04_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+  
+            
+            
+  
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/deepfashion/07_color.gif" alt="Appearance">
+                    <img src="assets/deepfashion/07_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+  
+            
+
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/deepfashion/06_color.gif" alt="Appearance">
+                    <img src="assets/deepfashion/06_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/deepfashion/09_color.gif" alt="Appearance">
+                    <img src="assets/deepfashion/09_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+  
+           
+
+
+            
+
+  
+            
+          </div>
+        </div>
+      </div>
+      </section>
+    </div>
+
+
+    <div class="container is-max-desktop content">
+      <h4 class="title">Generated 360&deg samples on UBCFashion</h4>
+
+      <section class="hero is-light is-small">
+    
+    
+      <div class="hero-body">
+        <div class="container">
+          <div id="results-carousel" class="carousel results-carousel">
+            <!-- <div class="item item-steve">
+              <video poster="" autoplay controls muted loop height="100%">
+                <source src="https://ait.ethz.ch/projects/2022/gdna/downloads/assets/sample1_crop.mp4" type="video/mp4">
+              </video>
+            </div> -->
+            
+            
+           
+
+
+            
+
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/ubcfashion/11_color.gif" alt="Appearance">
+                    <img src="assets/ubcfashion/11_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+  
+            
+  
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/ubcfashion/04_color.gif" alt="Appearance">
+                    <img src="assets/ubcfashion/04_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+
+            </div>
+
+
+
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/ubcfashion/03_color.gif" alt="Appearance">
+                    <img src="assets/ubcfashion/03_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+
+            </div>
+      
+            
+
+            
+
+
+            
+
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/ubcfashion/07_color.gif" alt="Appearance">
+                    <img src="assets/ubcfashion/07_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/ubcfashion/05_color.gif" alt="Appearance">
+                    <img src="assets/ubcfashion/05_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+
+  
+
+  
+  
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/ubcfashion/09_color.gif" alt="Appearance">
+                    <img src="assets/ubcfashion/09_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+  
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/ubcfashion/20_color.gif" alt="Appearance">
+                    <img src="assets/ubcfashion/20_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+            
+           
+          </div>
+        </div>
+      </div>
+      </section>
+    </div>
+
+  
+
+  <div class="container is-max-desktop content">
+    
+    <h3 class="title">Animation</h3>
+    
+    <div class="container is-max-desktop content">
+      <h4 class="title">Walking</h4>
+      <section class="hero is-light is-small">
+    
+    
+      <div class="hero-body">
+        <div class="container">
+          <div id="results-carousel" class="carousel results-carousel">
+            <!-- <div class="item item-steve">
+              <video poster="" autoplay controls muted loop height="100%">
+                <source src="https://ait.ethz.ch/projects/2022/gdna/downloads/assets/sample1_crop.mp4" type="video/mp4">
+              </video>
+            </div> -->
+  
+           
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/walking/ubcfashion/04_color.gif" alt="Appearance">
+                    <img src="assets/walking/ubcfashion/04_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+
+            
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/walking/ubcfashion/09_color.gif" alt="Appearance">
+                    <img src="assets/walking/ubcfashion/09_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+
+           
+
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/walking/deepfashion/02_color.gif" alt="Appearance">
+                    <img src="assets/walking/deepfashion/02_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+  
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/walking/deepfashion/04_color.gif" alt="Appearance">
+                    <img src="assets/walking/deepfashion/04_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+
+            
+
+
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/walking/ubcfashion/02_color.gif" alt="Appearance">
+                    <img src="assets/walking/ubcfashion/02_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/walking/deepfashion/05_color.gif" alt="Appearance">
+                    <img src="assets/walking/deepfashion/05_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+
+
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/walking/deepfashion/06_color.gif" alt="Appearance">
+                    <img src="assets/walking/deepfashion/06_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+  
+   
+  
+     
+  
+  
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/walking/ubcfashion/07_color.gif" alt="Appearance">
+                    <img src="assets/walking/ubcfashion/07_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+
+     
+  
+       
+            
+           
+          </div>
+        </div>
+      </div>
+      </section>
+    </div>
+
+
+    <div class="container is-max-desktop content">
+      <h4 class="title">Crossed Arm</h4>
+      <section class="hero is-light is-small">
+    
+    
+      <div class="hero-body">
+        <div class="container">
+          <div id="results-carousel" class="carousel results-carousel">
+            <!-- <div class="item item-steve">
+              <video poster="" autoplay controls muted loop height="100%">
+                <source src="https://ait.ethz.ch/projects/2022/gdna/downloads/assets/sample1_crop.mp4" type="video/mp4">
+              </video>
+            </div> -->
+  
+            
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/crossed_arm/deepfashion/01_color.gif" alt="Appearance">
+                    <img src="assets/crossed_arm/deepfashion/01_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+  
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/crossed_arm/deepfashion/08_color.gif" alt="Appearance">
+                    <img src="assets/crossed_arm/deepfashion/08_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+
+            
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/crossed_arm/ubcfashion/05_color.gif" alt="Appearance">
+                    <img src="assets/crossed_arm/ubcfashion/05_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/crossed_arm/ubcfashion/01_color.gif" alt="Appearance">
+                    <img src="assets/crossed_arm/ubcfashion/01_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+  
+  
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/crossed_arm/deepfashion/03_color.gif" alt="Appearance">
+                    <img src="assets/crossed_arm/deepfashion/03_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+  
+  
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/crossed_arm/ubcfashion/03_color.gif" alt="Appearance">
+                    <img src="assets/crossed_arm/ubcfashion/03_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/crossed_arm/ubcfashion/06_color.gif" alt="Appearance">
+                    <img src="assets/crossed_arm/ubcfashion/06_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+  
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/crossed_arm/ubcfashion/08_color.gif" alt="Appearance">
+                    <img src="assets/crossed_arm/ubcfashion/08_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+            
+           
+          </div>
+        </div>
+      </div>
+      </section>
+    </div>
+
+
+
+    <div class="container is-max-desktop content">
+      <h4 class="title">High Knees</h4>
+      <section class="hero is-light is-small">
+    
+    
+      <div class="hero-body">
+        <div class="container">
+          <div id="results-carousel" class="carousel results-carousel">
+            <!-- <div class="item item-steve">
+              <video poster="" autoplay controls muted loop height="100%">
+                <source src="https://ait.ethz.ch/projects/2022/gdna/downloads/assets/sample1_crop.mp4" type="video/mp4">
+              </video>
+            </div> -->
+  
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/high_knees/ubcfashion/04_color.gif" alt="Appearance">
+                    <img src="assets/high_knees/ubcfashion/04_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+            
+  
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/high_knees/deepfashion/01_color.gif" alt="Appearance">
+                    <img src="assets/high_knees/deepfashion/01_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/high_knees/ubcfashion/01_color.gif" alt="Appearance">
+                    <img src="assets/high_knees/ubcfashion/01_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+  
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/high_knees/ubcfashion/05_color.gif" alt="Appearance">
+                    <img src="assets/high_knees/ubcfashion/05_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+  
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/high_knees/deepfashion/03_color.gif" alt="Appearance">
+                    <img src="assets/high_knees/deepfashion/03_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+  
+  
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/high_knees/ubcfashion/03_color.gif" alt="Appearance">
+                    <img src="assets/high_knees/ubcfashion/03_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+
+
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/high_knees/deepfashion/00_color.gif" alt="Appearance">
+                    <img src="assets/high_knees/deepfashion/00_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+  
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/high_knees/ubcfashion/08_color.gif" alt="Appearance">
+                    <img src="assets/high_knees/ubcfashion/08_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+            
+           
+          </div>
+        </div>
+      </div>
+      </section>
+    </div>
 
   </div>
+
+
+
+
+
+
+
+  <div class="container is-max-desktop content">
+    <h3 class="title">Interpolation</h3>
+
+
+    <div class="container is-max-desktop content">
+      <section class="hero is-light is-small">
+    
+    
+      <div class="hero-body">
+        <div class="container">
+          <div id="results-carousel" class="carousel results-carousel">
+            <!-- <div class="item item-steve">
+              <video poster="" autoplay controls muted loop height="100%">
+                <source src="https://ait.ethz.ch/projects/2022/gdna/downloads/assets/sample1_crop.mp4" type="video/mp4">
+              </video>
+            </div> -->
+  
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/interpolation/00_color.gif" alt="Appearance">
+                    <img src="assets/interpolation/00_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+            
+  
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/interpolation/01_color.gif" alt="Appearance">
+                    <img src="assets/interpolation/01_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/interpolation/03_color.gif" alt="Appearance">
+                    <img src="assets/interpolation/03_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+  
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/interpolation/04_color.gif" alt="Appearance">
+                    <img src="assets/interpolation/04_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+  
+            <div class="item item-chair-tp">
+  
+  
+              <div style="padding:0px">
+                <div class="b-dics" style="width: 300px">
+                    <img src="assets/interpolation/05_color.gif" alt="Appearance">
+                    <img src="assets/interpolation/05_geo.gif" alt="Geometry">
+                </div>
+            </div>
+            
+            </div>
+  
+
+
+
+
+            
+           
+          </div>
+        </div>
+      </div>
+      </section>
+    </div>
+
+  </div>
+
+
+  
+
 </section>
+
+
+
+
+<!-- <section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-chair-tp">
+        <div class="b-dics" style="width: 590px">
+          <img src="assets/00_color.gif" alt="appearance" />
+          <img src="assets/00_geo.gif" alt="geometry" />
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+</section> -->
+
+
 
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
-    <pre><code>@inproceedings{chen2021snarf,
-      title={SNARF: Differentiable Forward Skinning for Animating Non-Rigid Neural Implicit Shapes},
-      author={Chen, Xu and Zheng, Yufeng and Black, Michael J and Hilliges, Otmar and Geiger, Andreas},
-      booktitle={International Conference on Computer Vision (ICCV)},
-      year={2021}
+    <pre><code>@inproceedings{dong2023ag3d,
+      title={AG3D: Learning to Generate 3D Avatars from 2D Image Collections},
+      author={Zijian Dong, Xu Chen, Jinlong Yang, Michael J.Black, Otmar Hilliges, Andreas Geiger},
+      booktitle={Arxiv},
+      year={2023}
     }</code></pre>
   </div>
 </section>
