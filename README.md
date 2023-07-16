@@ -1,17 +1,8 @@
-# AG3D: Learning to Generate 3D Avatars from 2D Image Collections
-## [Paper](https://ait.ethz.ch/projects/2022/gdna/downloads/main.pdf) | [Video](https://youtu.be/uOyoH7OO16I) | [Project Page](https://zj-dong.github.io/AG3D/)
+# AG3D: Learning to Generate 3D Avatars from 2D Image Collections (ICCV 2023)
+## [Paper](https://arxiv.org/abs/2305.02312) | [Supplementary] (https://ait.ethz.ch/assets/projects/ag3d/iccv23_supplementary.pdf) [Video](https://youtu.be/niP1YhJXEBE) | [Project Page](https://zj-dong.github.io/AG3D/)
 
-<img src="assets/fig_teaser.png" /> 
+<img src="assets/teaser.png" /> 
 
 
-Official code release for CVPR 2022 paper [*gDNA: Towards Generative Detailed Neural Avatars*](https://ait.ethz.ch/projects/2022/gdna/downloads/main.pdf). We propose a model that can generate diverse detailed and animatable 3D humans. 
+Official code will be released soon for ICCV 2023 paper [*AG3D: AG3D: Learning to Generate 3D Avatars from 2D Image Collections*](https://arxiv.org/abs/2305.02312). Learned from 2D image collections, AG3D synthesizes novel 3D humans with high-quality appearance and geometry, different identities and clothing styles including loose clothing such as skirts.
 
-If you find our code or paper useful, please cite as
-```
-@inproceedings{chen2022gdna,
-      title={gDNA: Towards Generative Detailed Neural Avatars},
-      author={Chen, Xu and Jiang, Tianjian and Song, Jie and Yang, Jinlong and Black, Michael J and Geiger, Andreas and Hilliges, Otmar},    
-      booktitle   = {IEEE Conf. on Computer Vision and Pattern Recognition (CVPR)},
-      year      = {2022}
-      }
-```
