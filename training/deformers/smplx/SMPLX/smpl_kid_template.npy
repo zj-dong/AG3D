@@ -1,0 +1,14 @@
+Error: Username/Password wrong.<!DOCTYPE html><html>
+<head><link rel='stylesheet' media='all' href='default.css' data-turbolinks-track='reload' /></head>
+<body>
+<form class='form-signin' id='new_user' method='post'>
+<h1 class='h3 mb-3 font-weight-normal'>Sign in</h1>
+<label class='sr-only' for='user_login'>Login</label>
+<input autofocus='autofocus' placeholder='Email' class='form-control' type='text' name='username' id='username' />
+<label class='sr-only' for='user_password'>Password</label>
+<input autocomplete='off' placeholder='Password' class='form-control' type='password' name='password' id='password' />
+<input type='submit' name='commit' value='Log in' class='btn btn-lg btn-outline-secondary btn-block mb-4' data-disable-with='Log in' />
+<div class='content-link'>Not Registered? <a href='https://agora.is.tue.mpg.de/register.php'>Register</a><br /></div>
+</form>
+</body>
+</html>

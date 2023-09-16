@@ -1,0 +1,12 @@
+README.md
+setup.py
+fuse.egg-info/PKG-INFO
+fuse.egg-info/SOURCES.txt
+fuse.egg-info/dependency_links.txt
+fuse.egg-info/top_level.txt
+training/deformers/fast_snarf/cuda/filter/filter.cpp
+training/deformers/fast_snarf/cuda/filter/filter_kernel.cu
+training/deformers/fast_snarf/cuda/fuse_kernel/fuse_cuda.cpp
+training/deformers/fast_snarf/cuda/fuse_kernel/fuse_cuda_kernel.cu
+training/deformers/fast_snarf/cuda/precompute/precompute.cpp
+training/deformers/fast_snarf/cuda/precompute/precompute_kernel.cu

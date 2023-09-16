@@ -1,0 +1,43 @@
+name: ag3d
+channels:
+  - anaconda
+  - conda-forge
+  - pytorch
+  - defaults
+dependencies:
+  - ninja=1.10.2
+  - scipy=1.7.1
+  - tqdm=4.62.2
+  - torchvision
+  - python[version='>=3.9']
+  - numpy[version='>=1.20']
+  - click[version='>=8.0']
+  - imageio=2.9.0
+  - cudatoolkit=11.1
+  - pillow=8.3.1
+  - imageio=2.9.0
+  - iopath
+  - fvcore
+  - pip
+  - pip:
+    - imgui==1.3.0
+    - glfw==2.2.0
+    - pyopengl==3.1.5
+    - imageio-ffmpeg==0.4.3
+    - pyspng
+    - psutil
+    - mrcfile
+    - tensorboard
+    - Cython
+    - scikit-image==0.18.2
+    - trimesh
+    - wandb
+    - opencv-python==4.5.2.54
+    - hydra-core==1.0.6
+    - setuptools==59.5.0
+    - chumpy==0.70
+    - plyfile==1.0.1
+    - matplotlib==3.7.2
+    - dill==0.3.7
+
+    
